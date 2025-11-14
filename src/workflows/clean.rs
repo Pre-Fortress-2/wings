@@ -14,9 +14,10 @@ pub struct CleanWorkflow
 
 impl CleanWorkflow
 {
-    pub fn wizard(_ctx: &mut RunnerContext) -> Result<(), BeansError>
+    pub fn wizard(ctx: &mut RunnerContext) -> Result<(), BeansError>
     {
         let target_directory = helper::get_tmp_dir();
+        let staging_dir_location = ctx.get_staging_location();
 
         info!("[CleanWorkflow] Cleaning up {}", target_directory);
         if !helper::file_exists(target_directory.clone())
@@ -65,7 +66,7 @@ impl CleanWorkflow
                 });
             }
         }
-
+        
         info!("[CleanWorkflow] Done!");
         Ok(())
     }
