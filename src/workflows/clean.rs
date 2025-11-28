@@ -46,6 +46,26 @@ impl CleanWorkflow
             });
         }
 
+        // clean up butler files if it was interrupted in previous install
+        if !helper::file_exists(staging_dir_location.clone())
+        {
+            debug!("[CleanWorkflow] Staging directory used by butler not found, nothing to clean.")
+        }
+        else
+        {
+            // delete temp butler directory and it's contents (and error handling)
+            info!("[CleanWorkflow] Cleaning up {}", staging_dir_location);
+            if let Err(e) = std::fs::remove_dir_all(&staging_dir_location)
+            {
+                debug!("[CleanWorkflow::wizard] remove_dir_all {:#?}", e);
+                return Err(BeansError::CleanTempFailure {
+                    location: staging_dir_location,
+                    error: e,
+                    backtrace: std::backtrace::Backtrace::capture()
+                });
+            }
+        }
+
         info!("[CleanWorkflow] Done!");
         Ok(())
     }
