@@ -15,11 +15,9 @@ on:
         options:
           - main
           - game/tf2c
-          - game/pf2
+          - game/pf2-vpk
 
-run-name: Release (${{ inputs.game_branch }})
-
-run-name: Release ${{ inputs.tag }}
+run-name: Release ${{ inputs.tag }} (${{ inputs.game_branch }})
 
 jobs:
   release:
@@ -32,7 +30,6 @@ jobs:
           - os: ubuntu-22.04
             filename: 'wings'
             target: x86_64-unknown-linux-gnu
-
           - os: windows-2022
             target: x86_64-pc-windows-msvc
             filename: 'wings.exe'
