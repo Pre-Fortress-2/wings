@@ -413,7 +413,9 @@ pub fn is_game_running(mod_directory: String) -> Option<sysinfo::Pid>
                     if let Some(proc_name_str) = proc.name().to_str()
                     {
                         let proc_name = proc_name_str.to_string().to_lowercase();
-                        if proc_name != *"beans" && proc_name != *"beans-rs" && proc_name != *"wings" 
+                        if proc_name != *"beans"
+                            && proc_name != *"beans-rs"
+                            && proc_name != *"wings"
                         {
                             return true;
                         }

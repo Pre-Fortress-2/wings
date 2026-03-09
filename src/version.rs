@@ -244,7 +244,10 @@ async fn generate_version_file(
         Ok(v) => v,
         Err(e) =>
         {
-            error!("[WizardContext::run] Failed to run version::get_file_map() {:#?}", e);
+            error!(
+                "[WizardContext::run] Failed to run version::get_file_map() {:#?}",
+                e
+            );
             trace!("{:#?}", e);
             sentry::capture_error(&e);
             return Err(e);
@@ -257,7 +260,10 @@ async fn generate_version_file(
             Ok(v) => v,
             Err(e) =>
             {
-                error!("[version::read_mod_version_file] Failed to read mod version file. {:#?}", e);
+                error!(
+                    "[version::read_mod_version_file] Failed to read mod version file. {:#?}",
+                    e
+                );
                 trace!("{:#?}", e);
                 sentry::capture_error(&e);
                 return Err(e);
@@ -279,11 +285,12 @@ async fn generate_version_file(
     if adastral_value.is_empty()
     {
         let ex = BeansError::RemoteFileMapLocalVersionNotFound {
-            expected: mod_version_file_content.clone(),
+            expected: mod_version_file_content.clone()
         };
         debug!("{:#?}", ex);
         error!(
-            "[version::generate_version_file] Local version not found in remote filemap. Remote FileMap potentially outdated. {:#?}", ex
+            "[version::generate_version_file] Local version not found in remote filemap. Remote FileMap potentially outdated. {:#?}",
+            ex
         );
         sentry::capture_error(&ex);
         return Err(ex);

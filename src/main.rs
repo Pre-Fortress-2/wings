@@ -1,20 +1,5 @@
 use std::str::FromStr;
 
-use wings::{BeansError,
-               PANIC_MSG_CONTENT,
-               RunnerContext,
-               SourceModDirectoryParam,
-               flags,
-               flags::LaunchFlag,
-               gui::DialogIconKind,
-               helper,
-               helper::parse_location,
-               wizard,
-               workflows::{CleanWorkflow,
-                           InstallWorkflow,
-                           UninstallWorkflow,
-                           UpdateWorkflow,
-                           VerifyWorkflow}};
 use clap::{Arg,
            ArgAction,
            ArgMatches,
@@ -25,6 +10,21 @@ use log::{LevelFilter,
           info,
           trace,
           warn};
+use wings::{BeansError,
+            PANIC_MSG_CONTENT,
+            RunnerContext,
+            SourceModDirectoryParam,
+            flags,
+            flags::LaunchFlag,
+            gui::DialogIconKind,
+            helper,
+            helper::parse_location,
+            wizard,
+            workflows::{CleanWorkflow,
+                        InstallWorkflow,
+                        UninstallWorkflow,
+                        UpdateWorkflow,
+                        VerifyWorkflow}};
 
 pub const DEFAULT_LOG_LEVEL_RELEASE: LevelFilter = LevelFilter::Info;
 #[cfg(debug_assertions)]
