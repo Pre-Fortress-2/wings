@@ -25,7 +25,7 @@ jobs:
             filename: 'beans-rs.exe'
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v6
       - name: Install Build Dependencies (ubuntu)
         if: ${{ matrix.os == 'ubuntu-22.04' }}
         run: |
@@ -59,10 +59,7 @@ jobs:
           toolchain: nightly-2025-01-10
           targets: ${{ matrix.target }}
 
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release --target ${{ matrix.target }}
+      - run: cargo build --release --target ${{ matrix.target }}
 
       - name: Code Signing (Windows)
         if: ${{ matrix.os == 'windows-2022' }}
@@ -75,16 +72,17 @@ jobs:
           certificatesha1: '${{ secrets.CODESIGN_HASH }}'
 
       - name: Upload binaries to release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           files: target/${{ matrix.target }}/release/${{ matrix.filename }}
           tag_name: ${{ github.event.inputs.tag }}
           draft: false
           prerelease: true
           target_commitish: ${{ github.sha }}
+
       #- name: Create Sentry release
       #  if: ${{ matrix.os == 'ubuntu-latest' }}
-      #  uses: getsentry/action-release@v1
+      #  uses: getsentry/action-release@v3
       #  env:
       #    SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       #    SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
